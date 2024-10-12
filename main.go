@@ -1,7 +1,11 @@
 package main
 
-import "fmt"
+// type cliCommand struct {
+// 	name        string
+// 	description string
+// 	callback    func() error
+// }
 
 func main() {
-	fmt.Println("hello world")
+	startREPL()
 }
