@@ -25,8 +25,8 @@ func commandCatch(cfg *config, args ...string) error {
 		return fmt.Errorf("%s broke out of the pokeball", pokemon.Name)
 	}
 
-	fmt.Printf("%s was caught!", pokemon.Name)
+	fmt.Printf("%s was caught!\n", pokemon.Name)
 
-	cfg.caughtPokemon[pokemon.Name] = pokemon
+	cfg.caughtPokemon[pokemonName] = pokemon
 	return nil
 }
