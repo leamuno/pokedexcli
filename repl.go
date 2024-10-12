@@ -5,9 +5,17 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/leamuno/pokedexcli/internal/pokeapi"
 )
 
-func startREPL() {
+type config struct {
+	pokeapiClient       pokeapi.Client
+	nextLocationAreaURL *string
+	prevLocationAreaURL *string
+}
+
+func startRepl(cfg *config) {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
@@ -31,14 +39,17 @@ func startREPL() {
 			continue
 		}
 
-		command.callback()
+		err := command.callback(cfg)
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
 }
 
 type cliCommand struct {
 	name        string
 	description string
-	callback    func() error
+	callback    func(*config) error
 }
 
 func getCommands() map[string]cliCommand {
@@ -52,6 +63,16 @@ func getCommands() map[string]cliCommand {
 			name:        "exit",
 			description: "Exit the Pokedex",
 			callback:    commandExit,
+		},
+		"mapf": {
+			name:        "mapf",
+			description: "Lists the next page of location areas",
+			callback:    commandMapF,
+		},
+		"mapb": {
+			name:        "mapb",
+			description: "Lists the previous page of location areas",
+			callback:    commandMapB,
 		},
 	}
 }

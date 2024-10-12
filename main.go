@@ -1,11 +1,16 @@
 package main
 
-// type cliCommand struct {
-// 	name        string
-// 	description string
-// 	callback    func() error
-// }
+import (
+	"time"
+
+	"github.com/leamuno/pokedexcli/internal/pokeapi"
+)
 
 func main() {
-	startREPL()
+	pokeClient := pokeapi.NewClient(5 * time.Second)
+	cfg := &config{
+		pokeapiClient: pokeClient,
+	}
+
+	startRepl(cfg)
 }
